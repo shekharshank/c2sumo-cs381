@@ -1,0 +1,3 @@
+--working-directory Middleware
+--url-alias /static Middleware/static
+Middleware/c3stemserver.py

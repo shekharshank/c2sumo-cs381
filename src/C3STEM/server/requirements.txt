@@ -1,0 +1,6 @@
+bcrypt
+bson
+cherrypy
+docker-py
+https://github.com/google/google-visualization-python/tarball/master #gviz_api
+pymongo

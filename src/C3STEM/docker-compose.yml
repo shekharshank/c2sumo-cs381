@@ -1,0 +1,15 @@
+mongo:
+  image: mongo
+
+server:
+  build: ./server
+  links:
+    - mongo
+  ports:
+    - "80:80"
+    - "443:443"
+
+# sumo:
+#   build: ./sumo
+#   ports:
+#     - "9999"

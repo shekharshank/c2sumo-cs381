@@ -1,0 +1,50 @@
+This is the full output of running the container:
+[Fri Nov 20 16:48:11.816998 2015] [mpm_event:notice] [pid 19:tid 140493234792192] AH00489: Apache/2.4.17 (Unix) mod_wsgi/4.4.21 Python/2.7.10 configured -- resuming normal operations
+[Fri Nov 20 16:48:11.817235 2015] [core:notice] [pid 19:tid 140493234792192] AH00094: Command line: 'httpd (mod_wsgi-express) -f /tmp/mod_wsgi-localhost:80:0/httpd.conf -E /dev/stderr -D MOD_WSGI_MPM_ENABLE_EVENT_MODULE -D MOD_WSGI_MPM_EXISTS_EVENT_MODULE -D MOD_WSGI_MPM_EXISTS_WORKER_MODULE -D MOD_WSGI_MPM_EXISTS_PREFORK_MODULE -D FOREGROUND'
+[Fri Nov 20 16:48:11.880050 2015] [wsgi:error] [pid 21:tid 140493234792192] mod_wsgi (pid=21): Target WSGI script '/tmp/mod_wsgi-localhost:80:0/handler.wsgi' cannot be loaded as Python module.
+[Fri Nov 20 16:48:11.880238 2015] [wsgi:error] [pid 21:tid 140493234792192] mod_wsgi (pid=21): Exception occurred processing WSGI script '/tmp/mod_wsgi-localhost:80:0/handler.wsgi'.
+[Fri Nov 20 16:48:11.880461 2015] [wsgi:error] [pid 21:tid 140493234792192] Traceback (most recent call last):
+[Fri Nov 20 16:48:11.880616 2015] [wsgi:error] [pid 21:tid 140493234792192]   File "/tmp/mod_wsgi-localhost:80:0/handler.wsgi", line 94, in <module>
+[Fri Nov 20 16:48:11.880969 2015] [wsgi:error] [pid 21:tid 140493234792192]     recorder_directory=recorder_directory)
+[Fri Nov 20 16:48:11.881132 2015] [wsgi:error] [pid 21:tid 140493234792192]   File "/usr/local/python/lib/python2.7/site-packages/mod_wsgi/server/__init__.py", line 1267, in __init__
+[Fri Nov 20 16:48:11.881925 2015] [wsgi:error] [pid 21:tid 140493234792192]     exec(code, self.module.__dict__)
+[Fri Nov 20 16:48:11.882076 2015] [wsgi:error] [pid 21:tid 140493234792192]   File "/app/Middleware/c3stemserver.py", line 12, in <module>
+[Fri Nov 20 16:48:11.882522 2015] [wsgi:error] [pid 21:tid 140493234792192]     from auth import AuthController, require, has_role, has_privileges
+[Fri Nov 20 16:48:11.882687 2015] [wsgi:error] [pid 21:tid 140493234792192] ImportError: No module named auth
+
+Finally, I'm not sure if it's related, but when I ran `pip list` from the container's shell (it logged me in as root), I got the following warning:
+
+The directory '/var/www/.cache/pip/http' or its parent directory is not owned by the current user and the cache has been disabled. Please check the permissions and owner of that directory. If executing pip with sudo, you may want sudo's -H flag.
+
+
+Additionally, while in the container, I ran mod_wsgi-express start-server script-name on my wsgi script and it failed at a different point than any other time I've run it (see below).
+
+[Fri Nov 20 17:14:52.144243 2015] [mpm_event:notice] [pid 50:tid 140059736422144] AH00489: Apache/2.4.17 (Unix) mod_wsgi/4.4.21 Python/2.7.10 configured -- resuming normal operations
+[Fri Nov 20 17:14:52.144302 2015] [core:notice] [pid 50:tid 140059736422144] AH00094: Command line: 'httpd (mod_wsgi-express) -f /tmp/mod_wsgi-localhost:8000:0/httpd.conf -D MOD_WSGI_MPM_ENABLE_EVENT_MODULE -D MOD_WSGI_MPM_EXISTS_EVENT_MODULE -D MOD_WSGI_MPM_EXISTS_WORKER_MODULE -D MOD_WSGI_MPM_EXISTS_PREFORK_MODULE -D FOREGROUND'
+[Fri Nov 20 17:14:52.184669 2015] [wsgi:error] [pid 52:tid 140059736422144] mod_wsgi (pid=52): Target WSGI script '/tmp/mod_wsgi-localhost:8000:0/handler.wsgi' cannot be loaded as Python module.
+[Fri Nov 20 17:14:52.184703 2015] [wsgi:error] [pid 52:tid 140059736422144] mod_wsgi (pid=52): Exception occurred processing WSGI script '/tmp/mod_wsgi-localhost:8000:0/handler.wsgi'.
+[Fri Nov 20 17:14:52.184717 2015] [wsgi:error] [pid 52:tid 140059736422144] Traceback (most recent call last):
+[Fri Nov 20 17:14:52.184732 2015] [wsgi:error] [pid 52:tid 140059736422144]   File "/tmp/mod_wsgi-localhost:8000:0/handler.wsgi", line 94, in <module>
+[Fri Nov 20 17:14:52.184783 2015] [wsgi:error] [pid 52:tid 140059736422144]     recorder_directory=recorder_directory)
+[Fri Nov 20 17:14:52.184792 2015] [wsgi:error] [pid 52:tid 140059736422144]   File "/usr/local/python/lib/python2.7/site-packages/mod_wsgi/server/__init__.py", line 1267, in __init__
+[Fri Nov 20 17:14:52.185233 2015] [wsgi:error] [pid 52:tid 140059736422144]     exec(code, self.module.__dict__)
+[Fri Nov 20 17:14:52.185246 2015] [wsgi:error] [pid 52:tid 140059736422144]   File "/app/Middleware/c3stemserver.py", line 12, in <module>
+[Fri Nov 20 17:14:52.185368 2015] [wsgi:error] [pid 52:tid 140059736422144]     from auth import AuthController, require, has_role, has_privileges
+[Fri Nov 20 17:14:52.185376 2015] [wsgi:error] [pid 52:tid 140059736422144]   File "/app/Middleware/auth.py", line 1, in <module>
+[Fri Nov 20 17:14:52.185421 2015] [wsgi:error] [pid 52:tid 140059736422144]     import cherrypy
+[Fri Nov 20 17:14:52.185435 2015] [wsgi:error] [pid 52:tid 140059736422144] ImportError: No module named cherrypy
+[Fri Nov 20 17:14:59.595570 2015] [mpm_event:notice] [pid 50:tid 140059736422144] AH00491: caught SIGTERM, shutting down
+
+I didn't change any code or install any additional packages, but for some reason it successfully recognized auth. Unfortunately, according to pip, cherrypy is also installed.
+
+From script:
+['/app/Middleware', '/usr/local/python/lib/python27.zip', '/usr/local/python/lib/python2.7', '/usr/local/python/lib/python2.7/plat-linux2', '/usr/local/python/lib/python2.7/lib-tk',
+'/usr/local/python/lib/python2.7/lib-old', '/usr/local/python/lib/python2.7/lib-dynload', '/usr/local/python/lib/python2.7/site-packages', '/app/Middleware/']
+
+From shell:
+['/app/Middleware', '/.whiskey/virtualenv/lib/python27.zip', '/.whiskey/virtualenv/lib/python2.7', '/.whiskey/virtualenv/lib/python2.7/plat-linux2', '/.whiskey/virtualenv/lib/python2.7/lib-tk',
+'/.whiskey/virtualenv/lib/python2.7/lib-old', '/.whiskey/virtualenv/lib/python2.7/lib-dynload', '/usr/local/python/lib/python2.7', '/usr/local/python/lib/python2.7/plat-linux2',
+'/usr/local/python/lib/python2.7/lib-tk', '/.whiskey/virtualenv/lib/python2.7/site-packages', '/usr/local/python/lib/python2.7/site-packages', '/app/Middleware/']
+
+PATH:
+/.whiskey/virtualenv/bin:/usr/local/python/bin:/usr/local/apache/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Fri Feb 28 19:42:26 2014 by SUMO sumo Version 0.19.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo-sim.org/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="/app/Map/westend.net_A.xml"/>
+        <route-files value="/app/Map/westend.rou.xml"/>
+        <additional-files value="/app/Map/westend.vtype.xml,/app/Map/westend.tlLogic.xml,/app/Map/westend.induction.xml"/>
+    </input>
+
+    <output>
+        <queue-output value="/app/Middleware/static/Data/queue_out.xml"/>
+        <tripinfo-output value="/app/Middleware/static/Data/tripinfo_out.xml"/>
+        <vehroute-output value="/app/Middleware/static/Data/routeinfo_out.xml"/>
+        <save-state.prefix value="/app/Map/state"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+        <end value="300"/>
+    </time>
+
+    <report>
+        <verbose value="true"/>
+    </report>
+
+    <traci_server>
+        <remote-port value="9999"/>
+    </traci_server>
+
+    <gui_only>
+        <gui-settings-file value="/app/Map/gui-settings.cfg"/>
+        <start value="true"/>
+    </gui_only>
+
+</configuration>
+-->
+
+<tripinfos>
+</tripinfos>
